@@ -1,0 +1,33 @@
+{
+  "name": "autocomplete-search",
+  "version": "0.1.0",
+  "description": "A simple javascript regex-based client-side autocomplete search tool.",
+  "main": "index.js",
+  "scripts": {
+    "test": "google-chrome ./test/runner.html",
+    "scss": "node-sass --watch scss -o css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/johnckealy/autocomplete-search.git"
+  },
+  "author": "John C. Kealy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johnckealy/autocomplete-search/issues"
+  },
+  "homepage": "https://github.com/johnckealy/autocomplete-search#readme",
+  "dependencies": {
+    "@babel/core": "^7.10.2",
+    "babel": "^6.23.0",
+    "babelify": "^10.0.0",
+    "browserify": "^16.5.1",
+    "chai": "^4.2.0",
+    "mocha-browser": "^0.2.0",
+    "mocha-phantomjs": "^4.1.0",
+    "node-sass": "^4.14.1"
+  },
+  "devDependencies": {
+    "mocha": "^7.2.0"
+  }
+}

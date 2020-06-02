@@ -1,0 +1,33 @@
+<!-- Open this file in a browser to run the package's tests.  -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Mocha Tests</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script class="mocha-init">
+        mocha.setup('bdd');
+        mocha.growl(); // <-- Enables web notifications
+      </script>
+      
+
+    <!-- load code you want to test here -->
+    <div id="autocomplete"></div>
+    <script src="./test_data.js"></script>
+    <script src="../index.js"></script>
+    <script src="./index.test.js"></script>
+    
+    <!-- load your test files here -->
+
+
+    <script class="mocha-exec">
+        mocha.run();
+    </script>
+  </body>
+</html>

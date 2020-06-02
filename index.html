@@ -4,25 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Autocomplete</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
     <div id=autocomplete-wrapper>
-        <h2>Search </h2>
-        <div>
-            <input  id="autocomplete" type="text">
-        </div>
+        <input  id="autocomplete" type="text" placeholder="Find your surf break... ">
     </div>
     
     <script src="index.js"></script>
     <script>
         new AutoComplete({
             el: "#autocomplete",
-            threshold: 0,
+            threshold: 2,
             max_results: 7,
             key: 'name',
-            secondarAutoCompletey_key: 'country',
+            secondary_key: 'country',
             api_endpoint: "http://localhost:8000/api/spots/",
         })
     </script>

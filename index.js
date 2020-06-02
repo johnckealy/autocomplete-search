@@ -1,22 +1,26 @@
-
 class AutoComplete {
 
     constructor(options) {
         this.input = document.querySelector(options.el);
         this.threshold = options.threshold;
         this.query = '';
-        this.api_endpoint =  options.api_endpoint;
         this.max_results = options.max_results;
         this.key = options.key;
         this.secondary_key = options.secondary_key;
 
-        this.fetchData().then(res => this.data_obj = res).then(this.init());
+        if (options.jsonData && !options.api_endpoint) {
+            this.dataObj = options.jsonData;
+        } else if (options.api_endpoint && !options.jsonData) {
+            this.fetchData(options.api_endpoint).then(res => this.dataObj = res).then(this.init());
+        } else {
+            throw new Error('You must include either a dataObj or api_endpoint option, and not both.')
+        }
         
     }
 
-    fetchData() {
+    fetchData(api_endpoint) {
         return new Promise((resolve,reject) => {
-            const source = fetch(this.api_endpoint )
+            const source = fetch(api_endpoint )
             source.then(res => resolve(res.json()))     
         })
     }
@@ -24,7 +28,7 @@ class AutoComplete {
     search(query) {
         // Using regular expressions, returns an ordered 
         // list of item matching the search string
-        const spots = this.data_obj.filter(dta => {
+        const spots = this.dataObj.filter(dta => {
             let re = `${query}`;
             let rgx = new RegExp(re, "i");
             let list = rgx.exec(dta[this.key]+dta[this.secondary_key]);
@@ -43,8 +47,9 @@ class AutoComplete {
         items.forEach(item => {
             const acItemLink = document.createElement("a"); 
             const acItem = document.createElement("li"); 
-            acItemLink.href = "#"
+            acItemLink.href = "https://google.com"
             acItem.innerText = `${item[this.key]}, ${item[this.secondary_key]}`
+            acItem.classList.add("ac-result")
             ul.appendChild(acItemLink).appendChild(acItem)
             acItem.focus()
         })
@@ -68,14 +73,20 @@ class AutoComplete {
                 query = query.replace('Backspace','')
                 query = query.substring(0, query.length - 1);
             }
-            if (query.length > this.threshold) {
+            if (query.length >= this.threshold) {
                 const items = this.search(query.toLowerCase());
-                this.appendToDOM(items);
+                if (Array.isArray(items) && items.length > 0) {
+                    this.appendToDOM(items);
+                }
             }
         })
+        document.getElementById("autocomplete-wrapper").onblur = this.removeULfromDOM;
+        const parentThis = this;
+        this.input.onfocus = function (e) {
+            if (query.length >= this.threshold) {
+                const items = parentThis.search(e.target.value.toLowerCase());
+                if (Array.isArray(items) && items.length > 0) { parentThis.appendToDOM(items); }
+            }
+        }
     }
 }
-
-
-
-
