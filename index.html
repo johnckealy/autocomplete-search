@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autocomplete</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id=autocomplete-wrapper>
+        <h2>Search </h2>
+        <div>
+            <input  id="autocomplete" type="text">
+        </div>
+    </div>
+    
+    <script src="index.js"></script>
+    <script>
+        new AutoComplete({
+            el: "#autocomplete",
+            threshold: 0,
+            max_results: 7,
+            key: 'name',
+            secondarAutoCompletey_key: 'country',
+            api_endpoint: "http://localhost:8000/api/spots/",
+        })
+    </script>
+</body>
+</html>
