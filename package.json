@@ -24,7 +24,9 @@
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.2",
     "@babel/preset-env": "^7.10.2",
+    "chai": "^4.2.0",
     "minify": "^5.1.1",
+    "mocha": "^7.2.0",
     "node-sass": "^4.14.1"
   }
 }
