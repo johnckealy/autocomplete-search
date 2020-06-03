@@ -13,14 +13,16 @@
     </div>
     
     <script src="index.js"></script>
+    <script src="./test/test_data.js"></script>
     <script>
         new AutoComplete({
             el: "#autocomplete",
-            threshold: 2,
+            threshold: 1,
             max_results: 7,
             key: 'name',
             secondary_key: 'country',
             api_endpoint: "http://localhost:8000/api/spots/",
+            // jsonData: testData
         })
     </script>
 </body>

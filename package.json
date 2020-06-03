@@ -11,6 +11,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com/johnckealy/autocomplete-search.git"
   },
+  "keywords": ['autocomplete', 'search', 'browser'],
   "author": "John C. Kealy",
   "license": "ISC",
   "bugs": {

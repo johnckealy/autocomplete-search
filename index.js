@@ -6,23 +6,30 @@ class AutoComplete {
         this.query = '';
         this.max_results = options.max_results;
         this.key = options.key;
-        this.secondary_key = options.secondary_key;
+        if (options.secondary_key) {
+            this.secondary_key = options.secondary_key;
+        } else {
+            this.secondary_key = '';
+        }
 
         if (options.jsonData && !options.api_endpoint) {
             this.dataObj = options.jsonData;
+            this.init();
         } else if (options.api_endpoint && !options.jsonData) {
-            this.fetchData(options.api_endpoint).then(res => this.dataObj = res).then(this.init());
+            this.fetchData(options.api_endpoint).then(res => this.dataObj = res).then(this.init())
         } else {
             throw new Error('You must include either a dataObj or api_endpoint option, and not both.')
-        }
-        
+        }   
     }
 
-    fetchData(api_endpoint) {
-        return new Promise((resolve,reject) => {
-            const source = fetch(api_endpoint )
-            source.then(res => resolve(res.json()))     
-        })
+    async fetchData(api_endpoint) {
+        let data = await fetch(api_endpoint)
+                            .then(response => {
+                                if (!response.ok) throw new Error('Unable to retrieve the autocomplete data from the server.');
+                                return response;
+                            })
+                            .then(response => response.json());
+        return data
     }
 
     search(query) {
@@ -47,11 +54,11 @@ class AutoComplete {
         items.forEach(item => {
             const acItemLink = document.createElement("a"); 
             const acItem = document.createElement("li"); 
-            acItemLink.href = "https://google.com"
-            acItem.innerText = `${item[this.key]}, ${item[this.secondary_key]}`
-            acItem.classList.add("ac-result")
-            ul.appendChild(acItemLink).appendChild(acItem)
-            acItem.focus()
+            acItemLink.href = "https://google.com";
+            acItem.innerText = `${item[this.key]}, ${item[this.secondary_key]}`;
+            acItem.classList.add("ac-result");
+            ul.appendChild(acItemLink).appendChild(acItem);
+            acItem.focus();
         })
         this.input.after(ul);
     }
@@ -66,11 +73,11 @@ class AutoComplete {
     init() {
         // initialize and add event handlers
         this.input.addEventListener('keydown', e => {
-            // if ()
-            this.removeULfromDOM()
-            let query = this.input.value + e.key
+            
+            if (e.key != 'ArrowRight' && e.key != 'ArrowLeft') this.removeULfromDOM();
+            let query = this.input.value + e.key;
             if (e.key == 'Backspace') {
-                query = query.replace('Backspace','')
+                query = query.replace('Backspace','');
                 query = query.substring(0, query.length - 1);
             }
             if (query.length >= this.threshold) {
@@ -83,7 +90,7 @@ class AutoComplete {
         document.getElementById("autocomplete-wrapper").onblur = this.removeULfromDOM;
         const parentThis = this;
         this.input.onfocus = function (e) {
-            if (query.length >= this.threshold) {
+            if (e.target.value.length >= this.threshold) {
                 const items = parentThis.search(e.target.value.toLowerCase());
                 if (Array.isArray(items) && items.length > 0) { parentThis.appendToDOM(items); }
             }
