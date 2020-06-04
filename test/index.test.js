@@ -33,8 +33,17 @@ describe('Unit tests', function() {
 
         it('should produce the results in the correct order', function() {
             const result = auto.search('n');
-            console.log(result)
-            assert.equal(result[0].name.toLowerCase(), "Nazaré");
+            assert.equal(result[0].name, "Nazaré");
+        })
+
+        it('should work correctly for multiple matching letters', function() {
+            const result = auto.search('Naz');
+            assert.equal(result[0].name, "Nazaré");
+        })
+
+        it('should match letters in the middle of the search string', function() {
+            const result = auto.search('rand');
+            assert.equal(result[0].name, "Strandhill");
         })
 
     });
