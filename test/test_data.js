@@ -8,7 +8,7 @@ const testData = [
     }, 
     {
         "id": 2,
-        "name": "Batu Bolong (Old man's)",
+        "name": "Batu Bolong",
         "description": "Consistent break, part sandy part reef; beginner to medium difficulty",
         "region": "Bali",
         "country": "Indonesia"

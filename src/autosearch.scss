@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
 
 
-
+$active-bg: rgb(88, 88, 88);
+$active-text: white;
 
 
 
@@ -17,8 +18,8 @@ ul {
     li {
         padding: 10px 5px;
         &:hover {
-            background-color: rgb(88, 88, 88);
-            color: white;
+            background-color: $active-bg;
+            color: $active-text;
         }
     }    
 }
@@ -28,6 +29,12 @@ a {
     color: black
 }
 
+.active {
+    li {
+        background-color: $active-bg;
+    }
+    color: $active-text;
+}
 
 #autocomplete-wrapper {
     display: flex;

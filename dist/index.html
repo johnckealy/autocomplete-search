@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Autocomplete</title>
-    <link rel="stylesheet" href="autosearch.min.css">
+    <link rel="stylesheet" href="autosearch.css">
 </head>
 <body>
 
-    <div id=autocomplete-wrapper>
-        <input  id="autocomplete" type="text" placeholder="Find your surf break... ">
-    </div>
+    <form id=autocomplete-wrapper method="get" action="">
+        <input  id="autocomplete" type="text"  autocomplete="off" placeholder="Find your surf break... ">
+    </form>
     
-    <script src="autosearch.min.js"></script>
+    <script src="../src/autosearch.js"></script>
     <script src="../test/test_data.js"></script>
     <script>
         new AutoComplete({

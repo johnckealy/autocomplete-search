@@ -18,6 +18,11 @@ a {
   text-decoration: none;
   color: black; }
 
+.active {
+  color: white; }
+  .active li {
+    background-color: #585858; }
+
 #autocomplete-wrapper {
   display: flex;
   flex-direction: column;

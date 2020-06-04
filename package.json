@@ -1,11 +1,11 @@
 {
   "name": "autocomplete-search",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A simple javascript regex-based client-side autocomplete search tool.",
   "main": "index.js",
   "scripts": {
     "test": "google-chrome ./test/runner.html",
-    "scss": "node-sass --watch scss -o css",
+    "scss": "node-sass --watch src/autosearch.scss -o dist/",
     "build-css": "node-sass src -o dist; postcss dist/autosearch.css --use autoprefixer -d dist/; minify dist/autosearch.css > dist/autosearch.min.css",
     "build-js": "babel src/autosearch.js -d dist/; cat src/helpers/polyfill.min.js dist/autosearch.js > dist/pautosearch.min.js; minify dist/pautosearch.min.js > dist/autosearch.min.js; rm dist/pautosearch.min.js"
   },
