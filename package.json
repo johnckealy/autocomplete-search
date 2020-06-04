@@ -1,8 +1,9 @@
 {
   "name": "autocomplete-search",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A simple javascript regex-based client-side autocomplete search tool.",
-  "main": "index.js",
+  "main": "dist/autosearch.js",
+  "browser": "dist/autosearch.min.js",
   "scripts": {
     "test": "google-chrome ./test/runner.html",
     "scss": "node-sass --watch src/autosearch.scss -o dist/",

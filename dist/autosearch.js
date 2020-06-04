@@ -17,6 +17,7 @@ var AutoComplete = /*#__PURE__*/function () {
     _classCallCheck(this, AutoComplete);
 
     this.input = document.querySelector(options.el);
+    this.form = document.getElementById("autocomplete-wrapper");
     this.threshold = options.threshold;
     this.query = '';
     this.max_results = options.max_results;
@@ -103,14 +104,18 @@ var AutoComplete = /*#__PURE__*/function () {
       ul.id = "ulist";
       items.forEach(function (item) {
         var acItemLink = document.createElement("a");
+        acItemLink.href = "";
         var acItem = document.createElement("li");
-        acItemLink.href = "https://google.com";
+        acItemLink.addEventListener('click', function () {
+          _this3.form.submit();
+        });
         acItem.innerText = "".concat(item[_this3.key], ", ").concat(item[_this3.secondary_key]);
         acItem.classList.add("ac-result");
         ul.appendChild(acItemLink).appendChild(acItem);
         acItem.focus();
       });
       this.input.after(ul);
+      ul.getElementsByTagName('a')[0].classList.add('active');
     }
   }, {
     key: "removeULfromDOM",
@@ -122,13 +127,48 @@ var AutoComplete = /*#__PURE__*/function () {
       }
     }
   }, {
+    key: "incrementActiveItem",
+    value: function incrementActiveItem(anchors, direction) {
+      var current;
+
+      for (var i = 0; i < anchors.length; i++) {
+        if (anchors[i].classList.contains('active')) {
+          anchors[i].classList.remove('active');
+
+          if (direction == 'down') {
+            if (anchors[i] == anchors[anchors.length - 1]) {
+              current = anchors[0];
+              current.classList.add('active');
+            } else {
+              current = anchors[i].nextElementSibling;
+              current.classList.add('active');
+            }
+
+            this.input.value = current.firstChild.innerText;
+          } else if (direction == 'up') {
+            if (anchors[i] == anchors[0]) {
+              current = anchors[anchors.length - 1];
+              current.classList.add('active');
+            } else {
+              current = anchors[i].previousElementSibling;
+              current.classList.add('active');
+            }
+
+            this.input.value = current.firstChild.innerText;
+          }
+
+          return;
+        }
+      }
+    }
+  }, {
     key: "init",
     value: function init() {
       var _this4 = this;
 
       // initialize and add event handlers
       this.input.addEventListener('keydown', function (e) {
-        if (e.key != 'ArrowRight' && e.key != 'ArrowLeft') _this4.removeULfromDOM();
+        if (e.key != 'ArrowRight' && e.key != 'ArrowLeft' && e.key != 'ArrowUp' && e.key != 'ArrowDown') _this4.removeULfromDOM();
         var query = _this4.input.value + e.key;
 
         if (e.key == 'Backspace') {
@@ -143,8 +183,22 @@ var AutoComplete = /*#__PURE__*/function () {
             _this4.appendToDOM(items);
           }
         }
+
+        var ul = document.getElementById("ulist");
+
+        if (ul) {
+          if (e.key == "ArrowDown") {
+            var anchors = ul.getElementsByTagName('a');
+
+            _this4.incrementActiveItem(anchors, 'down');
+          } else if (e.key == "ArrowUp") {
+            var _anchors = ul.getElementsByTagName('a');
+
+            _this4.incrementActiveItem(_anchors, 'up');
+          }
+        }
       });
-      document.getElementById("autocomplete-wrapper").onblur = this.removeULfromDOM;
+      this.form.onblur = this.removeULfromDOM;
       var parentThis = this;
 
       this.input.onfocus = function (e) {
