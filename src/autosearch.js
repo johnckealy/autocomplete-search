@@ -3,6 +3,7 @@ class AutoComplete {
 
     constructor(options) {
         this.input = document.querySelector(options.el);
+        this.hiddenInput = document.getElementById("id-field");
         this.form = document.getElementById("autocomplete-wrapper");
         this.threshold = options.threshold;
         this.query = '';
@@ -53,12 +54,17 @@ class AutoComplete {
         // add the autocomplete list items to the DOM
         const ul = document.createElement("ul"); 
         ul.id = "ulist";
+
+        items = items.slice(0, this.max_results) 
         
         items.forEach(item => {
             const acItemLink = document.createElement("a");
             acItemLink.href = "";
             const acItem = document.createElement("li"); 
-            acItemLink.addEventListener('click', () => {
+            acItemLink.dataset.spotId = item.id;
+            acItemLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.hiddenInput.value = item.id;
                 this.form.submit();
             })
             acItem.innerText = `${item[this.key]}, ${item[this.secondary_key]}`;
@@ -112,7 +118,7 @@ class AutoComplete {
         this.input.addEventListener('keydown', e => {
             
             if (e.key != 'ArrowRight' && e.key != 'ArrowLeft' &&
-                e.key != 'ArrowUp' && e.key != 'ArrowDown') this.removeULfromDOM();
+                e.key != 'ArrowUp' && e.key != 'ArrowDown' && e.key != "Enter") this.removeULfromDOM();
             let query = this.input.value + e.key;
             if (e.key == 'Backspace') {
                 query = query.replace('Backspace','');
@@ -136,8 +142,25 @@ class AutoComplete {
                     this.incrementActiveItem(anchors, 'up');
                 }
             }
-                                
 
+            if (e.key == "Enter") {
+                e.preventDefault();
+                try {
+                    let activeElement = document.getElementsByClassName('active')[0]                
+                    this.hiddenInput.value = activeElement.dataset.spotId;
+                    this.form.submit();
+                }
+                catch {
+                    this.removeULfromDOM();   
+                    const ul = document.createElement("ul");   
+                    ul.id = "ulist";      
+                    const acItemLink = document.createElement("a");
+                    const acItem = document.createElement("li"); 
+                    acItem.innerText = "No results"
+                    ul.appendChild(acItemLink).appendChild(acItem);
+                    this.input.after(ul);
+                }
+            }
         })
 
 
@@ -149,5 +172,8 @@ class AutoComplete {
                 if (Array.isArray(items) && items.length > 0) { parentThis.appendToDOM(items); }
             }
         }
+
+
+
     }
 }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autocomplete</title>
+    <link rel="stylesheet" href="autosearch.css">
+</head>
+<body>
+
+    <form id=autocomplete-wrapper method="get" action="">
+        <input  id="autocomplete" type="text"  autocomplete="off" placeholder="Find your surf break... ">
+    </form>
+    
+    <script src="../src/autosearch.js"></script>
+    <script src="../test/test_data.js"></script>
+    <script>
+        new AutoComplete({
+            el: "#autocomplete",
+            threshold: 1,
+            max_results: 7,
+            key: 'name',
+            secondary_key: 'country',
+            // api_endpoint: "http://localhost:8000/api/spots/",
+            jsonData: testData
+        })
+    </script>
+</body>
+</html>
