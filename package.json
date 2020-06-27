@@ -1,6 +1,6 @@
 {
   "name": "autocomplete-search",
-  "version": "0.3.1",
+  "version": "0.4.1",
   "description": "A simple javascript regex-based client-side autocomplete search tool.",
   "main": "dist/autosearch.js",
   "browser": "dist/autosearch.min.js",

@@ -2,7 +2,7 @@
 
 autocomplete-search is a simple search function for the browser. 
 
-<img src="https://github.com/johnckealy/autocomplete-search/blob/master/demo.gif" alt="skewt" width="650px" height="300px">
+<img src="https://github.com/johnckealy/autocomplete-search/blob/master/demo.gif?raw=true" alt="" width="650px" height="300px">
 
 
 ## Installation
