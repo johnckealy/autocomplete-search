@@ -2,6 +2,9 @@
 
 autocomplete-search is a simple search function for the browser. 
 
+<img src="https://github.com/johnckealy/autocomplete-search/blob/master/demo.gif" alt="skewt" width="350px" height="300px">
+
+
 ## Installation
 
 `npm install autocomplete-search`
