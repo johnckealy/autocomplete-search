@@ -23,7 +23,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "minify": "^5.1.1",
-    "mocha": "^7.2.0",
+    "mocha": "^10.2.0",
     "node-sass": "^7.0.0"
   }
 }
